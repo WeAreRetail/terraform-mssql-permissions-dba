@@ -8,8 +8,6 @@ locals {
     permission_name = permission
     state           = "D"
   }]
-
-  db_owner_members = concat([var.entra_group_name], var.db_owner_members)
 }
 
 # Create the entra group in the database.
@@ -36,11 +34,15 @@ resource "mssqlpermissions_database_role" "dba_role" {
 
   name = var.role_name
   members = [
-    var.entra_group_name
+    mssqlpermissions_user.entra_group.name
   ]
 }
 
 # Assign the role to the db_owner role.
+locals {
+  db_owner_members = concat([mssqlpermissions_user.entra_group.name], var.db_owner_members)
+}
+
 resource "mssqlpermissions_database_role_members" "db_owner_members" {
 
   config = {
