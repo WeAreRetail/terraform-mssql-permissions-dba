@@ -1,3 +1,18 @@
+# Read the permissions list from the file permissions.json and create a list of permissions
+data "local_file" "permissions" {
+  filename = "${path.module}/permissions.yml"
+}
+
+locals {
+  permissions_deny_list_of_maps = [for permission in yamldecode(data.local_file.permissions.content).database.DENY : {
+    permission_name = permission
+    state           = "D"
+  }]
+
+  # dbo is built-in db_owner role - do not remove it
+  db_owner_members = concat(["dbo", var.entra_group_name], var.db_owner_members)
+}
+
 # Create the custom database role for the DBA group.
 resource "mssqlpermissions_database_role" "dba_role" {
 
@@ -14,7 +29,7 @@ resource "mssqlpermissions_database_role" "dba_role" {
 }
 
 # Assign the role to the db_owner role.
-resource "mssqlpermissions_database_role_members" "dba_role_to_db_owner" {
+resource "mssqlpermissions_database_role_members" "db_owner_members" {
 
   config = {
     server_fqdn   = var.server_fqdn
@@ -22,11 +37,8 @@ resource "mssqlpermissions_database_role_members" "dba_role_to_db_owner" {
     database_name = var.database_name
   }
 
-  name = "db_owner"
-  members = [
-    "dbo", # dbo is built-in db_owner role - do not remove
-    mssqlpermissions_database_role.dba_role.name
-  ]
+  name    = "db_owner"
+  members = local.db_owner_members
 }
 
 # Deny the custom database role the excessive permissions.
