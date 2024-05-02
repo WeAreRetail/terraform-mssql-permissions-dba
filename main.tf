@@ -19,8 +19,9 @@ resource "mssqlpermissions_user" "entra_group" {
     database_name = var.database_name
   }
 
-  name     = var.entra_group_name
-  external = true
+  name      = var.entra_group_name
+  external  = true
+  contained = false
 }
 
 # Create the custom database role for the DBA group.
