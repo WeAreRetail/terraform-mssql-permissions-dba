@@ -9,8 +9,20 @@ locals {
     state           = "D"
   }]
 
-  # dbo is built-in db_owner role - do not remove it
-  db_owner_members = concat(["dbo", var.entra_group_name], var.db_owner_members)
+  db_owner_members = concat([var.entra_group_name], var.db_owner_members)
+}
+
+# Create the entra group in the database.
+resource "mssqlpermissions_user" "entra_group" {
+
+  config = {
+    server_fqdn   = var.server_fqdn
+    server_port   = var.server_port
+    database_name = var.database_name
+  }
+
+  name     = var.entra_group_name
+  external = true
 }
 
 # Create the custom database role for the DBA group.
