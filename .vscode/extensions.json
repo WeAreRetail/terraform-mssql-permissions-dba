@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "DavidAnson.vscode-markdownlint",
-    "esbenp.prettier-vscode",
-    "hashicorp.terraform",
-    "ms-vscode-remote.remote-wsl",
-    "vscode-icons-team.vscode-icons"
-  ]
-}
