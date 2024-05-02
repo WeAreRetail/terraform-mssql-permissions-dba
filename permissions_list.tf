@@ -4,7 +4,7 @@ data "local_file" "permissions" {
 }
 
 locals {
-  permissions_list_of_maps = [for permission in yamldecode(data.local_file.permissions.content).database.DENY : {
+  permissions_deny_list_of_maps = [for permission in yamldecode(data.local_file.permissions.content).database.DENY : {
     permission_name = permission
     state           = "D"
   }]
