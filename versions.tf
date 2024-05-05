@@ -9,7 +9,7 @@ terraform {
     }
     mssqlpermissions = {
       source  = "WeAreRetail/mssqlpermissions"
-      version = ">= 0.1.4, < 1.0"
+      version = ">= 0.1.5, < 1.0"
     }
   }
 }
