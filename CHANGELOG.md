@@ -7,6 +7,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-09-24
+
+### Breaking Changes
+
+- Major version bump to 2.0.0 to reflect breaking changes.
+- Bump the `WeAreRetail/mssqlpermissions` provider to `~> 1.0`.
+- Refactor `mssqlpermissions` resources to use separate resources for role and role members.
+- Remove `database_name`, `server_fqdn`, and `server_port` variables as it's no longer needed with the new resource structure.
+
 ## [1.2.6] - 2024-05-05
 
 ### Fixed

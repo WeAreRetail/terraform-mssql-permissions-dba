@@ -5,11 +5,11 @@ terraform {
 
     local = {
       source  = "hashicorp/local"
-      version = "2.5.3"
+      version = ">= 2.0, < 3.0"
     }
     mssqlpermissions = {
       source  = "WeAreRetail/mssqlpermissions"
-      version = ">= 0.1.5, < 1.0"
+      version = ">= 1.0, < 2.0"
     }
   }
 }
